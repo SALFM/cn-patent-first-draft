@@ -1,0 +1,26 @@
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Python / tooling cache
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Node / package cache if future tooling is added
+node_modules/
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.orig
+~$*
