@@ -1,0 +1,8 @@
+interface:
+  display_name: "中国专利闭环草案"
+  short_description: "生成并审查迭代中国专利技术草案"
+  brand_color: "#2563EB"
+  default_prompt: "Use $cn-patent-first-draft to generate a result-state-driven Chinese patent technical draft from my technical disclosure."
+
+policy:
+  allow_implicit_invocation: true
