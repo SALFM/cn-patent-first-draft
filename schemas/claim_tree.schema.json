@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.local/cn-patent-first-draft/claim_tree.schema.json",
+  "title": "ClaimTree",
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["independent_claim_strategy", "claims"],
+  "properties": {
+    "independent_claim_strategy": {
+      "type": "object",
+      "required": ["subject", "essential_features", "scope_rationale"],
+      "properties": {
+        "subject": { "type": "string" },
+        "essential_features": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "scope_rationale": { "type": "string" },
+        "not_in_independent_claim": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "fallback_ladder": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["level", "features", "purpose"],
+        "properties": {
+          "level": { "type": "string", "enum": ["最宽", "中等", "较窄", "最窄"] },
+          "features": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "purpose": { "type": "string" }
+        }
+      }
+    },
+    "claims": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["number", "type", "text"],
+        "properties": {
+          "number": { "type": "integer", "minimum": 1 },
+          "type": { "type": "string", "enum": ["独立", "从属"] },
+          "depends_on": {
+            "type": "array",
+            "items": { "type": "integer", "minimum": 1 }
+          },
+          "text": { "type": "string" },
+          "fallback_purpose": { "type": "string" }
+        }
+      }
+    }
+  }
+}

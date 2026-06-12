@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.local/cn-patent-first-draft/support_map.schema.json",
+  "title": "SupportMap",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["items"],
+  "properties": {
+    "items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "claim_number",
+          "claim_feature",
+          "specification_support",
+          "is_sufficiently_supported",
+          "risk_handling"
+        ],
+        "properties": {
+          "claim_number": { "type": "integer", "minimum": 1 },
+          "claim_feature": { "type": "string" },
+          "specification_support": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "embodiment_support": { "type": "string" },
+          "drawing_recommendation_support": { "type": "string" },
+          "is_sufficiently_supported": { "type": "string", "enum": ["是", "否", "待确认"] },
+          "risk_handling": { "type": "string" }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,69 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.local/cn-patent-first-draft/invention_profile.schema.json",
+  "title": "InventionProfile",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "patent_title",
+    "application_type",
+    "technical_field",
+    "technical_problem",
+    "core_solution",
+    "essential_features",
+    "technical_effects",
+    "risks"
+  ],
+  "properties": {
+    "patent_title": { "type": "string" },
+    "application_type": {
+      "type": "string",
+      "enum": ["发明", "实用新型", "同日双报", "待确认", "其他"]
+    },
+    "technical_field": { "type": "string" },
+    "application_scenario": { "type": "string" },
+    "prior_art_defects": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "technical_problem": { "type": "string" },
+    "core_solution": { "type": "string" },
+    "essential_features": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "optional_features": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "technical_effects": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "embodiment_sources": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "risks": {
+      "type": "object",
+      "properties": {
+        "non_patentable_subject_matter": { "type": "string" },
+        "ai_software_risk": { "type": "string" },
+        "utility_model_structure_risk": { "type": "string" },
+        "disclosure_priority_confidentiality_subject": { "type": "string" }
+      }
+    },
+    "missing_information": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["item", "level"],
+        "properties": {
+          "item": { "type": "string" },
+          "level": { "type": "string", "enum": ["阻断型", "高风险", "可后补"] },
+          "handling": { "type": "string" }
+        }
+      }
+    }
+  }
+}

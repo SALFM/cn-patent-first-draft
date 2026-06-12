@@ -31,15 +31,16 @@
 模板位于 `templates/`：
 
 - `technical_disclosure_form.md` 影响用户输入字段。
-- `patent_draft_output.md` 影响固定输出结构。
+- `closed_loop_output.md` 是默认且唯一的最终输出结构。
+- `patent_draft_output.md` 仅作为历史兼容参考保留，不作为执行模式。
 - `self_checklist.md` 影响交付前自检。
 - `term_table.md` 影响术语统一表。
 
 修改模板时应检查：
 
-- 是否仍与 `SKILL.md` 的固定输出格式一致。
+- 是否仍与 `SKILL.md` 的闭环输出格式和 15 个最终章节一致。
 - 是否仍保留 `[待补充]` 的缺失处理方式。
-- 是否避免引导用户编造现有技术、实验数据、附图和主体信息。
+- 是否避免引导用户编造现有技术、实验数据、产品结构、参数、正式附图和主体/程序信息。
 - 是否需要同步更新 `examples/example_output.md`。
 - 是否需要同步更新 `README.md` 和 `docs/USAGE.md`。
 
@@ -65,10 +66,13 @@
 - `docs/USAGE.md`
 - `docs/FAQ.md`
 - `templates/technical_disclosure_form.md`
-- `templates/patent_draft_output.md`
+- `templates/closed_loop_output.md`
+- `templates/iteration_decision.md`
+- `templates/patent_draft_output.md`（仅兼容参考）
 - `templates/self_checklist.md`
 - `templates/term_table.md`
 - `examples/minimal_input.md`
+- `examples/closed_loop_example_output.md`
 - `examples/example_output.md`
 - `reference_summaries/99_integrated_rule_map.md`
 
@@ -78,14 +82,16 @@
 
 没有自动测试时，可以按人工自检执行：
 
-1. 用 `examples/minimal_input.md` 作为输入，检查输出是否仍按八个固定章节组织。
-2. 检查是否出现虚构附图、实验数据、主体信息或现有技术文献。
-3. 检查实用新型输出是否围绕产品结构，不把方法或流程写成核心保护对象。
-4. 检查摘要是否为连续段落且不超过 300 字。
-5. 检查说明书段落编号是否连续。
-6. 检查术语统一表、权利要求、说明书和附图标记是否一致。
-7. 对 AI/算法/软件/大数据示例，检查是否有技术问题、技术手段、技术效果和数据合规提示。
-8. 检查输出是否保留必要的 `[待补充]`，而不是自行补全未知事实。
+1. 用 `examples/minimal_input.md` 作为输入，检查输出是否按 15 个闭环最终章节组织。
+2. 检查是否执行 v0、Review、Weakness Routing、Regression Check 和 Iteration Decision。
+3. 检查是否出现虚构正式附图、实验数据、主体/程序信息或现有技术文献。
+4. 检查实用新型输出是否围绕产品结构，不把方法或流程写成核心保护对象。
+5. 检查建议附图方案是否说明每张图应包含的部件、模块、步骤、箭头或连接关系。
+6. 检查摘要是否为连续段落且不超过 300 字。
+7. 检查说明书段落编号是否连续。
+8. 检查术语统一表、权利要求、说明书和建议附图标记是否一致。
+9. 对 AI/算法/软件/大数据示例，检查是否有技术问题、技术手段、技术效果和数据合规提示。
+10. 检查输出是否保留必要的 `[待补充]`，而不是自行补全未知事实。
 
 ## Git 提交建议
 
@@ -109,9 +115,12 @@ references: add updated examination guideline materials
 提交前建议运行：
 
 ```bash
-git status
-git diff --check
-git diff --stat
+python scripts/validate_skill_structure.py
+python scripts/check_section_order.py examples/closed_loop_example_output.md
+python scripts/check_iteration_decision.py examples/closed_loop_example_output.md
+python scripts/check_pipeline_handoff.py examples/pipeline_handoff_example.md
+python scripts/check_banned_fabrication_markers.py examples/closed_loop_example_output.md
+python scripts/check_claim_numbering.py examples/closed_loop_example_output.md
 ```
 
 不要提交临时文件、编辑器缓存或本地环境文件。

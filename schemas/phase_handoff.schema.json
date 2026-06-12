@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.local/cn-patent-first-draft/phase_handoff.schema.json",
+  "title": "PhaseHandoff",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "case_id",
+    "phase",
+    "draft_version",
+    "result_state",
+    "allow_next_phase",
+    "score",
+    "input_artifacts",
+    "output_artifacts",
+    "tickets",
+    "needs_user_facts",
+    "next_phase",
+    "next_prompt"
+  ],
+  "properties": {
+    "case_id": { "type": "string", "minLength": 1 },
+    "phase": { "type": "string", "minLength": 1 },
+    "draft_version": { "type": "string", "minLength": 1 },
+    "controller_thread_id": { "type": "string" },
+    "phase_thread_id": { "type": "string" },
+    "result_state": {
+      "type": "string",
+      "enum": ["PASS", "REVISE", "NEEDS_USER_FACTS", "RISK_ACCEPTED", "STOP_LIMIT"]
+    },
+    "allow_next_phase": { "type": "boolean" },
+    "score": { "type": "number", "minimum": 0, "maximum": 10 },
+    "input_artifacts": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "output_artifacts": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "tickets": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["ticket_id", "severity", "status", "route", "blocking"],
+        "properties": {
+          "ticket_id": { "type": "string" },
+          "severity": { "type": "string", "enum": ["Major", "Medium", "Minor"] },
+          "status": { "type": "string", "enum": ["Open", "Fixed", "Deferred", "Needs User Facts", "Risk Accepted"] },
+          "route": { "type": "string" },
+          "blocking": { "type": "boolean" }
+        }
+      }
+    },
+    "needs_user_facts": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "next_phase": { "type": "string" },
+    "next_prompt": { "type": "string" }
+  }
+}

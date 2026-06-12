@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.local/cn-patent-first-draft/review_scorecard.schema.json",
+  "title": "ReviewScorecard",
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["total_score", "dimension_scores", "weaknesses", "quality_gate_passed"],
+  "properties": {
+    "total_score": { "type": "number", "minimum": 0, "maximum": 10 },
+    "dimension_scores": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["dimension", "weight", "score", "deduction_reason"],
+        "properties": {
+          "dimension": {
+            "type": "string",
+            "enum": [
+              "Patentability / 可专利性",
+              "Claim Scope / 保护范围合理性",
+              "Support & Enablement / 说明书支持与充分公开",
+              "Clarity & Consistency / 清楚性与一致性",
+              "Design-around Resistance / 抗绕开能力",
+              "Formality / 中国专利格式合规",
+              "Business Alignment / 与用户保护目标匹配"
+            ]
+          },
+          "weight": { "type": "number", "minimum": 0, "maximum": 1 },
+          "score": { "type": "number", "minimum": 0, "maximum": 10 },
+          "deduction_reason": { "type": "string" }
+        }
+      }
+    },
+    "weaknesses": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["severity", "weakness", "route", "disposition", "fix_suggestion"],
+        "properties": {
+          "severity": { "type": "string", "enum": ["Major", "Medium", "Minor"] },
+          "weakness": { "type": "string" },
+          "route": { "type": "string" },
+          "disposition": { "type": "string", "enum": ["AI Fixable", "Needs User Facts", "Risk Accepted", "Blocking"] },
+          "fix_suggestion": { "type": "string" }
+        }
+      }
+    },
+    "quality_gate_passed": { "type": "boolean" },
+    "next_round_focus": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  }
+}

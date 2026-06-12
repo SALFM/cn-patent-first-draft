@@ -1,0 +1,74 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.local/cn-patent-first-draft/iteration_decision.schema.json",
+  "title": "IterationDecision",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "draft_version",
+    "mode",
+    "iteration_round",
+    "max_rounds",
+    "result_state",
+    "continue_iteration",
+    "decision_reasons",
+    "next_routing_ticket_ids",
+    "remaining_risks",
+    "needs_user_facts"
+  ],
+  "properties": {
+    "draft_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "mode": {
+      "type": "string",
+      "enum": ["quick", "default", "deep"]
+    },
+    "iteration_round": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "max_rounds": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "result_state": {
+      "type": "string",
+      "enum": ["PASS", "REVISE", "NEEDS_USER_FACTS", "RISK_ACCEPTED", "STOP_LIMIT"]
+    },
+    "continue_iteration": {
+      "type": "boolean"
+    },
+    "decision_reasons": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "next_routing_ticket_ids": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "remaining_risks": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "needs_user_facts": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": { "result_state": { "const": "REVISE" } },
+        "required": ["result_state"]
+      },
+      "then": {
+        "properties": { "continue_iteration": { "const": true } }
+      },
+      "else": {
+        "properties": { "continue_iteration": { "const": false } }
+      }
+    }
+  ]
+}

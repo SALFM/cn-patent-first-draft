@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.local/cn-patent-first-draft/phase_scorecard.schema.json",
+  "title": "PhaseScorecard",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "case_id",
+    "phase",
+    "draft_version",
+    "total_score",
+    "result_state",
+    "allow_next_phase",
+    "dimensions",
+    "quality_gates",
+    "decision_reasons"
+  ],
+  "properties": {
+    "case_id": { "type": "string", "minLength": 1 },
+    "phase": {
+      "type": "string",
+      "enum": [
+        "Intake",
+        "Invention Mining",
+        "Feature Matrix",
+        "Claim Architecture",
+        "Specification",
+        "Drawing Plan",
+        "Initial Draft",
+        "Review",
+        "Routing",
+        "Revision",
+        "Regression Decision",
+        "Final Packaging"
+      ]
+    },
+    "draft_version": { "type": "string", "minLength": 1 },
+    "total_score": { "type": "number", "minimum": 0, "maximum": 10 },
+    "result_state": {
+      "type": "string",
+      "enum": ["PASS", "REVISE", "NEEDS_USER_FACTS", "RISK_ACCEPTED", "STOP_LIMIT"]
+    },
+    "allow_next_phase": { "type": "boolean" },
+    "dimensions": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name", "weight", "score", "deduction_reason", "blocking"],
+        "properties": {
+          "name": { "type": "string" },
+          "weight": { "type": "number", "minimum": 0, "maximum": 1 },
+          "score": { "type": "number", "minimum": 0, "maximum": 10 },
+          "deduction_reason": { "type": "string" },
+          "blocking": { "type": "boolean" }
+        }
+      }
+    },
+    "quality_gates": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["gate", "passed", "note"],
+        "properties": {
+          "gate": { "type": "string" },
+          "passed": { "type": "string", "enum": ["yes", "no", "partial"] },
+          "note": { "type": "string" }
+        }
+      }
+    },
+    "decision_reasons": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  }
+}

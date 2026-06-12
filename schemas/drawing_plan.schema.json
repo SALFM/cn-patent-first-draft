@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.local/cn-patent-first-draft/drawing_plan.schema.json",
+  "title": "DrawingPlan",
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["overall_strategy", "recommended_drawings", "recommended_reference_signs", "formal_reminder"],
+  "properties": {
+    "overall_strategy": { "type": "string" },
+    "recommended_drawings": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "figure_no",
+          "figure_name",
+          "figure_type",
+          "is_required",
+          "main_content",
+          "claim_features",
+          "specification_content",
+          "drawing_points"
+        ],
+        "properties": {
+          "figure_no": { "type": "string" },
+          "figure_name": { "type": "string" },
+          "figure_type": {
+            "type": "string",
+            "enum": ["结构示意图", "系统架构图", "流程图", "模块框图", "数据流图", "时序图", "局部放大图", "剖视图", "装配关系图", "应用场景图", "训练流程图", "推理流程图", "控制流程图", "其他"]
+          },
+          "is_required": { "type": "boolean" },
+          "main_content": { "type": "string" },
+          "claim_features": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "specification_content": { "type": "string" },
+          "drawing_points": { "type": "string" },
+          "facts_to_confirm": {
+            "type": "array",
+            "items": { "type": "string" }
+          }
+        }
+      }
+    },
+    "recommended_reference_signs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["sign", "name", "technical_feature", "figure_no"],
+        "properties": {
+          "sign": { "type": "string" },
+          "name": { "type": "string" },
+          "technical_feature": { "type": "string" },
+          "figure_no": { "type": "string" },
+          "enter_specification": { "type": "boolean" },
+          "enter_claims": { "type": "boolean" },
+          "note": { "type": "string" }
+        }
+      }
+    },
+    "formal_reminder": { "type": "string" }
+  }
+}

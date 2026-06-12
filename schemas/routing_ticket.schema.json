@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.local/cn-patent-first-draft/routing_ticket.schema.json",
+  "title": "RoutingTickets",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["tickets"],
+  "properties": {
+    "tickets": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "ticket_id",
+          "weakness",
+          "severity",
+          "route",
+          "target",
+          "instruction",
+          "acceptance_criteria",
+          "status"
+        ],
+        "properties": {
+          "ticket_id": { "type": "string", "pattern": "^WR-[0-9]{3,}$" },
+          "weakness": { "type": "string" },
+          "severity": { "type": "string", "enum": ["Major", "Medium", "Minor"] },
+          "route": { "type": "string" },
+          "target": {
+            "type": "array",
+            "items": { "type": "string", "enum": ["权利要求", "说明书", "摘要", "术语表", "附图建议", "支持映射", "格式", "其他"] }
+          },
+          "instruction": { "type": "string" },
+          "acceptance_criteria": { "type": "string" },
+          "status": { "type": "string", "enum": ["Open", "Fixed", "Deferred", "Needs User Facts", "Risk Accepted"] }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.local/cn-patent-first-draft/regression_check.schema.json",
+  "title": "RegressionCheck",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "closed_issues",
+    "open_issues",
+    "new_issues",
+    "claims_support_check",
+    "specification_support_check",
+    "abstract_sync_check",
+    "term_sync_check",
+    "drawing_sync_check",
+    "formality_check",
+    "fabrication_check",
+    "result_state",
+    "continue_iteration"
+  ],
+  "properties": {
+    "closed_issues": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "open_issues": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "new_issues": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "claims_support_check": { "type": "string" },
+    "specification_support_check": { "type": "string" },
+    "abstract_sync_check": { "type": "string" },
+    "term_sync_check": { "type": "string" },
+    "drawing_sync_check": { "type": "string" },
+    "formality_check": { "type": "string" },
+    "fabrication_check": { "type": "string" },
+    "ticket_status_updates": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["ticket_id", "status", "reason"],
+        "properties": {
+          "ticket_id": { "type": "string" },
+          "status": { "type": "string", "enum": ["Fixed", "Open", "Deferred", "Needs User Facts", "Risk Accepted"] },
+          "reason": { "type": "string" }
+        }
+      }
+    },
+    "result_state": { "type": "string", "enum": ["PASS", "REVISE", "NEEDS_USER_FACTS", "RISK_ACCEPTED", "STOP_LIMIT"] },
+    "continue_iteration": { "type": "boolean" },
+    "reason": { "type": "string" }
+  }
+}

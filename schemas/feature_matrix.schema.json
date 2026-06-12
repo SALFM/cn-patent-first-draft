@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.local/cn-patent-first-draft/feature_matrix.schema.json",
+  "title": "FeatureMatrix",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["features"],
+  "properties": {
+    "features": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": true,
+        "required": [
+          "id",
+          "feature",
+          "feature_type",
+          "is_essential",
+          "technical_problem",
+          "technical_effect",
+          "target_location",
+          "user_basis",
+          "risk"
+        ],
+        "properties": {
+          "id": { "type": "string" },
+          "feature": { "type": "string" },
+          "feature_type": {
+            "type": "string",
+            "enum": ["结构", "步骤", "模块", "数据", "算法", "参数", "材料", "连接关系", "控制逻辑", "效果", "其他"]
+          },
+          "is_essential": { "type": "string", "enum": ["是", "否", "待确认"] },
+          "technical_problem": { "type": "string" },
+          "technical_effect": { "type": "string" },
+          "target_location": {
+            "type": "array",
+            "items": { "type": "string", "enum": ["独权", "从权", "说明书", "附图建议", "不进入"] }
+          },
+          "user_basis": { "type": "string" },
+          "risk": { "type": "string" }
+        }
+      }
+    }
+  }
+}
